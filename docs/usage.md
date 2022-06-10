@@ -1,6 +1,6 @@
 # Usage
 
-Generated screenshots will be in the unversioned `htmlscreenshot/var/` directory.
+Generated screenshots will be created in the unversioned `htmlscreenshot/var/` directory.
 
 
 ## Help
