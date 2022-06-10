@@ -2,7 +2,7 @@
 permalink: /
 ---
 # HTML Screenshot PY docs 🌐 🖼 🐍
-> CLI tool to take screenshots of given webpages
+> Take fullpage screenshots for a batch of URLs with this easy CLI tool
 
 - [Installation](installation.md)
 - [Usage](usage.md)
