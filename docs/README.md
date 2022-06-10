@@ -10,4 +10,4 @@ permalink: /
 
 View source:
 
-- [MichaelCurrin/html-screenshot-py](https://github.com/MichaelCurrin/html-screenshot-py)
+[![MichaelCurrin - html-screenshot-py](https://img.shields.io/static/v1?label=MichaelCurrin&message=html-screenshot-py&color=blue&logo=github)](https://github.com/MichaelCurrin/html-screenshot-py "Go to GitHub repo")
