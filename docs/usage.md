@@ -58,7 +58,7 @@ Screenshot against a text file of URLs using the main module e.g.
 $ python -m htmlscreenshot ~/path/to/urls.txt
 ```
 
-Where the file is one URL per like, like [sample.txt][].
+Where the file has one URL per line - see [sample.txt][] for an example.
 
 
 ## Clean
