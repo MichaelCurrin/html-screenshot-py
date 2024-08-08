@@ -4,7 +4,7 @@ APP_DIR = htmlscreenshot
 
 default: install install-dev
 
-all: hooks install install-dev fix typecheck
+all: hooks install install-dev fix typecheck unit
 
 
 h help:
@@ -56,9 +56,13 @@ fix: fmt lint
 t typecheck:
 	mypy $(APP_DIR)
 
+unit:
+	pytest
+
 
 clean:
-	rm $(APP_DIR)/var/*.png
+	rm $(APP_DIR)/var/pdf/* &> /dev/null || true
+	rm $(APP_DIR)/var/png/* &> /dev/null || true
 
 
 page-help:

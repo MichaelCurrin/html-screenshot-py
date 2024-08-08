@@ -3,24 +3,30 @@ Scrape module.
 
 Importable functions and CLI tool for converting a single URL into an image.
 """
+# pylint: disable=global-statement,global-variable-not-assigned
 import sys
 from time import sleep
 
 from selenium import webdriver
+from selenium.webdriver.firefox.webdriver import WebDriver
 
 from . import lib
-from .lib import ADD_DATETIME_DEFAULT, PDF_DIR
+from .lib import ADD_DATETIME_DEFAULT, PNG_DIR
 
 
+EXT = ".png"
+FULL_SUFFIX = "FULL"
 WAIT_S = 3
 
-driver = None
+
+driver: WebDriver
 
 
-def close():
+def close() -> None:
     """
     Close webdriver.
     """
+    global driver
     assert driver, "driver is not defined"
 
     driver.quit()
@@ -29,15 +35,18 @@ def close():
 def setup_driver() -> None:
     """
     Initialize webdriver.
+
+    We add a timeout to implicitly wait for an element to be found, or a
+    command to complete, to improve loading of scripts and images before the
+    screenshot is taken.
     """
     global driver
-    driver = webdriver.Firefox()
 
-    # This should help on waiting for element.
+    driver = webdriver.Firefox()
     driver.implicitly_wait(WAIT_S)
 
 
-def load(url: str) -> str:
+def load_page(url: str) -> str:
     """
     Request a given webpage URL using the global driver.
 
@@ -46,6 +55,7 @@ def load(url: str) -> str:
     print(f"Requesting with browser: {url}")
     assert url.startswith("http"), f"URL must start with http(s) - got: {url}"
 
+    global driver
     driver.get(url)
     sleep(WAIT_S)
 
@@ -74,15 +84,17 @@ def save_screenshot(name: str, fullpage: bool, add_datetime: bool) -> None:
         in addition to always doing the partial screenshot.
     :param add_datetime: If True, add datetime to the output name.
     """
-    slug_filename = lib.make_filename(name, ".png", add_datetime)
-    out_path = PDF_DIR / slug_filename
+    global driver
+
+    slug_filename = lib.make_filename(name, EXT, add_datetime)
+    out_path = PNG_DIR / slug_filename
 
     result_ok = driver.save_screenshot(str(out_path))
 
     if fullpage:
-        fullpage_name = f"{name}--FULL"
-        slug_filename = lib.make_filename(fullpage_name, ".png", add_datetime)
-        out_path = PDF_DIR / slug_filename
+        fullpage_name = f"{name}-{FULL_SUFFIX}"
+        slug_filename = lib.make_filename(fullpage_name, EXT, add_datetime)
+        out_path = PNG_DIR / slug_filename
 
         body_el = driver.find_element_by_tag_name("body")
         result_ok = body_el.screenshot(str(out_path))
@@ -91,11 +103,11 @@ def save_screenshot(name: str, fullpage: bool, add_datetime: bool) -> None:
         raise ValueError(f"IO error on current page - name: {name}")
 
 
-def process(url: str, fullpage: bool) -> None:
+def process_page(url: str, fullpage: bool) -> None:
     """
     Convert a webpage URL into an image.
     """
-    name = load(url)
+    name = load_page(url)
     save_screenshot(name, fullpage, ADD_DATETIME_DEFAULT)
 
 
@@ -105,6 +117,8 @@ def main(args: list[str]) -> None:
 
     TODO: Make fullpage configurable.
     """
+    global driver
+
     if not args:
         print("Required arg: URL")
         sys.exit(0)
@@ -114,7 +128,7 @@ def main(args: list[str]) -> None:
     url = args.pop(0)
 
     try:
-        process(url, fullpage=True)
+        process_page(url, fullpage=True)
     finally:
         driver.quit()
 
