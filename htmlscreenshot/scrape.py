@@ -3,11 +3,13 @@ Scrape module.
 
 Importable functions and CLI tool for converting a single URL into an image.
 """
+
 # pylint: disable=global-statement,global-variable-not-assigned
 import sys
 from time import sleep
 
 from selenium import webdriver
+from selenium.webdriver.common.by import By
 from selenium.webdriver.firefox.webdriver import WebDriver
 
 from . import lib
@@ -59,7 +61,7 @@ def load_page(url: str) -> str:
     driver.get(url)
     sleep(WAIT_S)
 
-    driver.find_element_by_tag_name("title")
+    driver.find_element(By.TAG_NAME, "title")
 
     title = driver.title
 
@@ -96,7 +98,7 @@ def save_screenshot(name: str, fullpage: bool, add_datetime: bool) -> None:
         slug_filename = lib.make_filename(fullpage_name, EXT, add_datetime)
         out_path = PNG_DIR / slug_filename
 
-        body_el = driver.find_element_by_tag_name("body")
+        body_el = driver.find_element(By.TAG_NAME, "body")
         result_ok = body_el.screenshot(str(out_path))
 
     if result_ok is False:
