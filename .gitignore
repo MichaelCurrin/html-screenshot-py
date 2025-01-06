@@ -1,6 +1,6 @@
 __pycache__/
 
-venv
+.venv
 
 geckodriver.log
 htmlscreenshot/var/*.png
