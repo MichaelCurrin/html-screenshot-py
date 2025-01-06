@@ -38,5 +38,3 @@ Install packages into it:
 ```sh
 $ make install
 ```
-
-_Note use of Selenium **3** in the requirements file, since version **4** causes Geckodriver to crash._
