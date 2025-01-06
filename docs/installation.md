@@ -6,7 +6,7 @@
 - [Make](https://www.gnu.org/software/make/) - standard on Linux and macOS. Install on Windows or use the commands in Makefile without `make`.
 - [Python 3](https://www.python.org)
 - Firefox
-- [Geckodriver](https://firefox-source-docs.mozilla.org/testing/geckodriver/index.html)
+- Web driver for Firefox - [Geckodriver](https://firefox-source-docs.mozilla.org/testing/geckodriver/index.html)
 
 
 ## Install system dependencies
@@ -26,14 +26,14 @@ $ cd html-screenshot-py
 
 ## Install project packages
 
-Create a Python virtual environment.
+Create a Python virtual environment:
 
 ```bash
 $ python3 -m venv .venv
 $ source .venv/bin/activate
 ```
 
-Install packages into it.
+Install packages into it:
 
 ```sh
 $ make install
