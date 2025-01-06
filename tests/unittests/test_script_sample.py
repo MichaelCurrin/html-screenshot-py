@@ -1,6 +1,7 @@
 """
 Test script sample.
 """
+
 from htmlscreenshot import lib
 
 

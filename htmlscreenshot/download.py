@@ -4,6 +4,7 @@ Download module.
 Handle fetching and saving of binary data. This uses the traditional `requests`
 package, without any browser.
 """
+
 import sys
 from pathlib import Path
 
@@ -14,6 +15,7 @@ from .lib import ADD_DATETIME_DEFAULT, PDF_DIR
 
 
 EXT = ".pdf"
+REQUEST_TIMEOUT = 3
 
 
 def fetch(url: str) -> bytes:
@@ -26,7 +28,7 @@ def fetch(url: str) -> bytes:
 
     :raises: HTTPError for 4xx or 5xx response.
     """
-    resp = requests.get(url, stream=True)
+    resp = requests.get(url, stream=True, timeout=REQUEST_TIMEOUT)
 
     resp.raise_for_status()
 

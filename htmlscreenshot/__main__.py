@@ -1,6 +1,7 @@
 """
 HTML Screenshot application.
 """
+
 import sys
 
 from . import download, lib, scrape
